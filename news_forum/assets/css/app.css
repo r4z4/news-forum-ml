@@ -1,0 +1,27 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+
+.postt {
+    border: 2px solid black;
+    margin: 2px 2px;
+    padding: 2px 2px;
+}
+
+.error_text {
+    color: red;
+    font-weight: bold;
+}
+
+.desc_text {
+    color: purple;
+    font-size: 1.5em;
+}
+
+.classification_text {
+    color: rgb(23, 86, 68);
+    font-weight: bold;
+    font-size: 2em;
+}
