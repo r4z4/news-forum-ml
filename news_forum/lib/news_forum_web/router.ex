@@ -22,6 +22,8 @@ defmodule NewsForumWeb.Router do
 
     get "/", PageController, :home
     live "/text", TextLive, :index
+    live "/sports", SportsForumLive, :index
+    live "/news", NewsForumLive, :index
   end
 
   # Other scopes may use custom stacks.

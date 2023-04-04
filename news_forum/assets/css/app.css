@@ -4,7 +4,7 @@
 
 /* This file is for your main application CSS */
 
-.postt {
+.post {
     border: 2px solid black;
     margin: 2px 2px;
     padding: 2px 2px;
@@ -21,7 +21,7 @@
 }
 
 .classification_text {
-    color: rgb(23, 86, 68);
+    color: blue;
     font-weight: bold;
     font-size: 2em;
 }
