@@ -5,6 +5,7 @@ defmodule NewsForum.Accounts.User do
   @foreign_key_type :binary_id
   schema "users" do
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
@@ -39,6 +40,7 @@ defmodule NewsForum.Accounts.User do
     user
     |> cast(attrs, [:email, :password])
     |> validate_email(opts)
+    |> validate_username()
     |> validate_password(opts)
   end
 
@@ -59,6 +61,15 @@ defmodule NewsForum.Accounts.User do
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
+  end
+
+  defp validate_username(changeset) do
+    changeset
+    |> validate_required([:username])
+    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
+    |> validate_length(:email, max: 25)
+    |> unsafe_validate_unique(:username, NewsForum.Repo)
+    |> unique_constraint(:username)
   end
 
   defp maybe_hash_password(changeset, opts) do
@@ -120,6 +131,19 @@ defmodule NewsForum.Accounts.User do
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
+  end
+
+  @doc """
+  A user changeset for changing the username.
+  """
+  def username_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:username])
+    |> validate_username()
+    |> case do
+      %{changes: %{username: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :username, "did not change")
+    end
   end
 
   @doc """

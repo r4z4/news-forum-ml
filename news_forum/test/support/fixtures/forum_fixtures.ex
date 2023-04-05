@@ -22,4 +22,21 @@ defmodule NewsForum.Forums.ForumFixtures do
 
     article
   end
+
+  @doc """
+  Generate a post.
+  """
+  def post_fixture(attrs \\ %{}) do
+    {:ok, post} =
+      attrs
+      |> Enum.into(%{
+        category: "some category",
+        content: "some content",
+        date: ~N[2023-04-04 18:47:00],
+        title: "some title"
+      })
+      |> NewsForum.Forum.create_post()
+
+    post
+  end
 end

@@ -4,9 +4,13 @@ defmodule NewsForumWeb.NewsForumLive do
   """
 
   use NewsForumWeb, :live_view
+  alias NewsForum.Forum
+  alias NewsForum.Forum.Post
+  alias NewsForum.Utils
 
   def mount(_params, _session, socket) do
-    # path = Path.join(:code.priv_dir(:app), "Kitten.mp4")
+    articles = Forum.list_articles_by_cat("news")
+    posts = Forum.list_posts_by_cat("news")
 
     {:ok,
       socket
@@ -16,12 +20,14 @@ defmodule NewsForumWeb.NewsForumLive do
       |> assign(body: nil)
       |> assign(ref: nil)
       |> assign(form: nil)
+      |> assign(articles: articles)
       |> assign(classification: nil)
       |> assign(classification_link: nil)
-      |> assign(posts: [])
+      |> assign(posts: posts)
       |> assign(waiting: false)
     }
   end
+
 
   def render(assigns) do
     ~H"""
@@ -30,17 +36,45 @@ defmodule NewsForumWeb.NewsForumLive do
         class="bg-neutral-50 py-10 px-6 text-center text-neutral-800 dark:bg-neutral-700 dark:text-neutral-200">
         <h1 class="mb-6 text-5xl font-bold">News Forum</h1>
         <h3 class="mb-8 text-3xl font-bold">Discuss the latest issues in the news.</h3>
+        <img class="inline max-w-xs h-auto rounded-t-md" alt="" src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Noun_Newspaper_154015.svg" />
       </div>
-      
-      <div class="flex-1 flex flex-col justify-center mx-auto w-full">
-        <img class="max-w-xs h-auto rounded-t-md" alt="" src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Noun_Newspaper_154015.svg" />
 
+      <div class="flex justify-between grid grid-cols-1 mb-5">
+        <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Articles</h2>
+        <%= for article <- @articles do %>
+          <article class="container bg-white overflow-clip max-h-28 shadow-2xl rounded-2xl p-5">
+            <h1 class="font-bold text-purple-500">
+              <%= article.title %> || <%= Utils.display_datetime(article.date) %>
+            </h1>
+            <p class="font-light text-gray-500">
+              <%= article.content %>
+            </p>
+          </article>
+        <% end %>
+      </div>
+
+      <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Here's What Other Users are Saying</h2>
+      <div class="flex justify-between grid grid-cols-3 gap-6 m-10 mb-10">
+        <%= for post <- @posts do %>
+          <article class="container bg-white shadow-2xl rounded-2xl p-5">
+            <h1 class="font-bold text-purple-500">
+              <%= post.title %> || <%= Utils.display_datetime(post.date) %>
+            </h1>
+            <p class="font-light text-gray-500">
+              <%= post.content %>
+            </p>
+          </article>
+        <% end %>
+      </div>
+
+      <div class="flex-1 flex flex-col justify-center mx-auto w-full">
         <div :if={@waiting} class="mt-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Throbber_allbackgrounds_circledots_32.gif" alt="" />
         </div>
       </div>
 
       <div class="flex-1 flex flex-col justify-center mx-auto w-full">
+        <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Record Your Own Reaction</h2>
           <.form for={@form} phx-submit="classify">
             <div class="flex flex-wrap">
               <.input 
@@ -79,23 +113,6 @@ defmodule NewsForumWeb.NewsForumLive do
               Seems you may want to visit: <a class="classification_text" href={@classification_link}><%= String.capitalize(@classification) %></a>
             </p>
           </div>
-        </div>
-
-        <div class="flex justify-between grid grid-cols-3 gap-6 m-10 mb-10">
-          <%= for {post, title, date, label} <- @posts do %>
-            <article class="container bg-white shadow-2xl rounded-2xl p-5">
-              <h1 class="font-bold text-purple-500">
-                <%= title %>
-              </h1>
-              <p class="font-light text-gray-500 hover:font-bold">
-                <%= post %>
-              </p>
-              <h6 class="text-sm text-gray-300 mb-5">
-                <%= date %>
-              </h6>
-              <a href="#" class="rounded-lg py-2 px-4 text-center text-white bg-yellow-400 hover:bg-yellow-500">User's Page</a>
-            </article>
-          <% end %>
         </div>
       </div>
     </div>

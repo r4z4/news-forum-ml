@@ -66,4 +66,64 @@ defmodule NewsForum.Forums.ForumTest do
       assert %Ecto.Changeset{} = Forum.change_article(article)
     end
   end
+
+  describe "posts" do
+    alias NewsForum.Forum.Post
+
+    import NewsForum.ForumFixtures
+
+    @invalid_attrs %{category: nil, content: nil, date: nil, title: nil}
+
+    test "list_posts/0 returns all posts" do
+      post = post_fixture()
+      assert Forum.list_posts() == [post]
+    end
+
+    test "get_post!/1 returns the post with given id" do
+      post = post_fixture()
+      assert Forum.get_post!(post.id) == post
+    end
+
+    test "create_post/1 with valid data creates a post" do
+      valid_attrs = %{category: "some category", content: "some content", date: ~N[2023-04-04 18:47:00], title: "some title"}
+
+      assert {:ok, %Post{} = post} = Forum.create_post(valid_attrs)
+      assert post.category == "some category"
+      assert post.content == "some content"
+      assert post.date == ~N[2023-04-04 18:47:00]
+      assert post.title == "some title"
+    end
+
+    test "create_post/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Forum.create_post(@invalid_attrs)
+    end
+
+    test "update_post/2 with valid data updates the post" do
+      post = post_fixture()
+      update_attrs = %{category: "some updated category", content: "some updated content", date: ~N[2023-04-05 18:47:00], title: "some updated title"}
+
+      assert {:ok, %Post{} = post} = Forum.update_post(post, update_attrs)
+      assert post.category == "some updated category"
+      assert post.content == "some updated content"
+      assert post.date == ~N[2023-04-05 18:47:00]
+      assert post.title == "some updated title"
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      post = post_fixture()
+      assert {:error, %Ecto.Changeset{}} = Forum.update_post(post, @invalid_attrs)
+      assert post == Forum.get_post!(post.id)
+    end
+
+    test "delete_post/1 deletes the post" do
+      post = post_fixture()
+      assert {:ok, %Post{}} = Forum.delete_post(post)
+      assert_raise Ecto.NoResultsError, fn -> Forum.get_post!(post.id) end
+    end
+
+    test "change_post/1 returns a post changeset" do
+      post = post_fixture()
+      assert %Ecto.Changeset{} = Forum.change_post(post)
+    end
+  end
 end

@@ -3,6 +3,8 @@ defmodule NewsForum.Application do
   # for more information on OTP Applications
   @moduledoc false
 
+  #  "valhalla/distilbart-mnli-12-3"
+
   use Application
 
   @impl true
@@ -12,16 +14,24 @@ defmodule NewsForum.Application do
 
     labels = ["sports", "news", "entertainment", "politics"]
 
-    zero_shot_serving =
+    classification_serving =
       Bumblebee.Text.zero_shot_classification(
         model,
         tokenizer,
         labels,
         defn_options: [compiler: EXLA]
       )
+
+      # Question Answering
+
+    {:ok, roberta} = Bumblebee.load_model({:hf, "deepset/roberta-base-squad2"})
+    {:ok, roberta_tokenizer} = Bumblebee.load_tokenizer({:hf, "roberta-base"})
+
+    qa_serving = Bumblebee.Text.question_answering(roberta, roberta_tokenizer)
       
     children = [
-      {Nx.Serving, name: ClassificationServing, serving: zero_shot_serving},
+      {Nx.Serving, name: ClassificationServing, serving: classification_serving},
+      {Nx.Serving, name: QAServing, serving: qa_serving},
       {Task.Supervisor, name: NewsForum.TaskSupervisor},
       # Start the Telemetry supervisor
       NewsForumWeb.Telemetry,
