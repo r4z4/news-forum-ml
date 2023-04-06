@@ -1,7 +1,7 @@
 defmodule NewsForumWeb.ForumLive.FormComponent do
   use NewsForumWeb, :live_component
 
-  alias NewsForum.Forums.Forums
+  alias NewsForum.Forums
 
   @impl true
   def render(assigns) do

@@ -24,6 +24,13 @@ defmodule NewsForumWeb.Router do
     live "/text", TextLive, :index
     live "/sports", SportsForumLive, :index
     live "/news", NewsForumLive, :index
+
+    live "/articles", ArticleLive.Index, :index
+    live "/articles/new", ArticleLive.Index, :new
+    live "/articles/:id/edit", ArticleLive.Index, :edit
+
+    live "/articles/:id", ArticleLive.Show, :show
+    live "/articles/:id/show/edit", ArticleLive.Show, :edit
     
     live "/posts", PostLive.Index, :index
     live "/posts/new", PostLive.Index, :new

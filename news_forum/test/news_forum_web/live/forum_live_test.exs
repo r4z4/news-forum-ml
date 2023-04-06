@@ -2,7 +2,7 @@ defmodule NewsForumWeb.ForumLiveTest do
   use NewsForumWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import NewsForum.Forums.ForumsFixtures
+  import NewsForum.ForumsFixtures
 
   @create_attrs %{articles: [], category: "some category", desc: "some desc", members: [], title: "some title"}
   @update_attrs %{articles: [], category: "some updated category", desc: "some updated desc", members: [], title: "some updated title"}

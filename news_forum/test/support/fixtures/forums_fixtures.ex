@@ -1,7 +1,7 @@
-defmodule NewsForum.Forums.ForumsFixtures do
+defmodule NewsForum.ForumsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `NewsForum.Forums.Forums` context.
+  entities via the `NewsForum.Forums` context.
   """
 
   @doc """
@@ -17,7 +17,7 @@ defmodule NewsForum.Forums.ForumsFixtures do
         members: [],
         title: "some title"
       })
-      |> NewsForum.Forums.Forums.create_forum()
+      |> NewsForum.Forums.create_forum()
 
     forum
   end

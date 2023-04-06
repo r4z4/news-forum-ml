@@ -29,3 +29,39 @@
     patch={~p"/articles/#{@article}"}
   />
 </.modal>
+
+<div class="flex-1 flex flex-col justify-center mx-auto w-full">
+  <div :if={@waiting} class="mt-4 justify-center">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Throbber_allbackgrounds_circledots_32.gif" alt="" />
+  </div>
+</div>
+
+<div class="flex-1 flex flex-col justify-center mx-auto w-full">
+  <div :if={@answer} class="mt-4 justify-center">
+      <%= @answer %>
+  </div>
+</div>
+
+<div class="flex-1 flex flex-col justify-center mx-auto w-full">
+  <h2 class="mt-0 mb-2 text-3xl overline text-center font-medium leading-tight text-primary">Ask a Question</h2>
+    <.form for={@form} phx-submit="ask">
+      <.input 
+        type="textarea" 
+        value={@question} 
+        name="question" 
+        field={@form}
+        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+      />
+      <div class="flex flex-col items-center justify-center">
+        <button class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white">Post</button>
+      </div>
+    </.form>
+
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col justify-center mx-auto">
+      <p :if={@error} class="error_text">
+        <%= @error %>
+      </p>
+    </div>
+  </div>
+</div>

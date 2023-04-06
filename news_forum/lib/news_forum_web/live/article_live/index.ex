@@ -1,7 +1,7 @@
 defmodule NewsForumWeb.ArticleLive.Index do
   use NewsForumWeb, :live_view
 
-  alias NewsForum.Forums.Forum
+  alias NewsForum.Forum
   alias NewsForum.Forum.Article
 
   @impl true

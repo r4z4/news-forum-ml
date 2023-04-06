@@ -43,9 +43,11 @@ defmodule NewsForumWeb.SportsForumLive do
         <h2 class="mt-0 mb-2 text-3xl text-center overline font-medium leading-tight text-primary">Articles</h2>
         <%= for article <- @articles do %>
           <article class="container bg-white overflow-clip max-h-28 shadow-2xl rounded-2xl p-5">
+          <.link patch={~p"/articles/#{article.id}"} phx-click={JS.push_focus()}>
             <h1 class="font-bold text-purple-500">
               <%= article.title %> || <%= Utils.display_datetime(article.date) %>
             </h1>
+          </.link>
             <p class="font-light text-gray-500">
               <%= article.content %>
             </p>

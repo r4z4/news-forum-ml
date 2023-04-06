@@ -1,12 +1,12 @@
-defmodule NewsForum.Forums.ForumsTest do
+defmodule NewsForum.ForumsTest do
   use NewsForum.DataCase
 
-  alias NewsForum.Forums.Forums
+  alias NewsForum.Forums
 
   describe "forums" do
-    alias NewsForum.Forums.Forum
+    alias NewsForum.Forum
 
-    import NewsForum.Forums.ForumsFixtures
+    import NewsForum.ForumsFixtures
 
     @invalid_attrs %{articles: nil, category: nil, desc: nil, members: nil, title: nil}
 

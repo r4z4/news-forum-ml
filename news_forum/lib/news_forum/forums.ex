@@ -1,4 +1,4 @@
-defmodule NewsForum.Forums.Forums do
+defmodule NewsForum.Forums do
   @moduledoc """
   The Forums context.
   """

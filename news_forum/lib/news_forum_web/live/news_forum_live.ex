@@ -40,7 +40,7 @@ defmodule NewsForumWeb.NewsForumLive do
       </div>
 
       <div class="flex justify-between grid grid-cols-1 mb-5">
-        <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Articles</h2>
+        <h2 class="mt-0 mb-2 text-3xl font-medium text-center leading-tight text-primary">Articles</h2>
         <%= for article <- @articles do %>
           <article class="container bg-white overflow-clip max-h-28 shadow-2xl rounded-2xl p-5">
             <h1 class="font-bold text-purple-500">
@@ -53,7 +53,7 @@ defmodule NewsForumWeb.NewsForumLive do
         <% end %>
       </div>
 
-      <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Here's What Other Users are Saying</h2>
+      <h2 class="mt-0 mb-2 text-3xl font-medium text-center leading-tight text-primary">Here's What Other Users are Saying</h2>
       <div class="flex justify-between grid grid-cols-3 gap-6 m-10 mb-10">
         <%= for post <- @posts do %>
           <article class="container bg-white shadow-2xl rounded-2xl p-5">
@@ -68,13 +68,13 @@ defmodule NewsForumWeb.NewsForumLive do
       </div>
 
       <div class="flex-1 flex flex-col justify-center mx-auto w-full">
-        <div :if={@waiting} class="mt-4">
+        <div :if={@waiting} class="mt-4 justify-center">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Throbber_allbackgrounds_circledots_32.gif" alt="" />
         </div>
       </div>
 
       <div class="flex-1 flex flex-col justify-center mx-auto w-full">
-        <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-primary">Record Your Own Reaction</h2>
+        <h2 class="mt-0 mb-2 text-3xl font-medium leading-tight text-center text-primary">Record Your Own Reaction</h2>
           <.form for={@form} phx-submit="classify">
             <div class="flex flex-wrap">
               <.input 

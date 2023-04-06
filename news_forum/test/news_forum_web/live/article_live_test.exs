@@ -2,7 +2,7 @@ defmodule NewsForumWeb.ArticleLiveTest do
   use NewsForumWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import NewsForum.Forums.ForumFixtures
+  import NewsForum.ForumFixtures
 
   @create_attrs %{attachments: [], category: "some category", content: "some content", date: "2023-03-17T00:54:00", desc: "some desc", title: "some title"}
   @update_attrs %{attachments: [], category: "some updated category", content: "some updated content", date: "2023-03-18T00:54:00", desc: "some updated desc", title: "some updated title"}

@@ -1,7 +1,7 @@
 defmodule NewsForumWeb.ForumLive.Show do
   use NewsForumWeb, :live_view
 
-  alias NewsForum.Forums.Forums
+  alias NewsForum.Forums
 
   @impl true
   def mount(_params, _session, socket) do
